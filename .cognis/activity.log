@@ -38,3 +38,4 @@
 2026-04-02T12:02:22  refactor: future me will understand this
 2024-06-03T14:58:38  test(fixtures): make timestamps timezone-aware
 2024-06-19T09:15:45  fix: works on my machine (TM)
+2024-07-23T16:32:52  refactor(format): improve the demo scenario
