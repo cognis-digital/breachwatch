@@ -41,3 +41,4 @@
 2024-07-23T16:32:52  refactor(format): improve the demo scenario
 2024-08-09T11:49:59  test(cli): skip binary files by sniffing
 2024-08-26T18:06:06  ci(io): add usage examples to help
+2024-09-12T13:23:13  feat(ci): extract the scorer
