@@ -43,3 +43,4 @@
 2024-08-26T18:06:06  ci(io): add usage examples to help
 2024-09-12T13:23:13  feat(ci): extract the scorer
 2024-09-28T08:40:20  docs: ELI5 pass
+2024-10-15T15:57:27  refactor(fixtures): add a --quiet mode
