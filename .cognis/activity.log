@@ -49,3 +49,4 @@
 2024-12-04T12:48:48  docs(cli): add a dry-run flag
 2024-12-21T19:05:55  perf(report): make timestamps timezone-aware
 2025-01-24T14:22:02  style(ci): respect .gitignore when walking
+2025-02-10T09:39:09  build(detect): document the config keys
