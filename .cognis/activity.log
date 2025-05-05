@@ -54,3 +54,4 @@
 2025-03-16T11:13:23  docs(engine): reduce false positives on edge cases
 2025-04-01T18:30:30  ci(scoring): extract the scorer
 2025-04-18T13:47:37  docs: standing on the shoulders of giants (garak, sigma, trufflehog)
+2025-05-05T08:04:44  chore(report): add a --quiet mode
