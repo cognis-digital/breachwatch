@@ -58,3 +58,4 @@
 2025-05-21T15:21:51  refactor(deps): short-circuit on first critical
 2025-06-07T10:38:58  test(detect): add a --format json alias
 2025-06-24T17:55:05  ci(core): dedupe overlapping findings
+2025-07-10T12:12:12  fix: works on my machine (TM)
