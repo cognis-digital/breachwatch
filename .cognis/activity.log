@@ -60,3 +60,4 @@
 2025-06-24T17:55:05  ci(core): dedupe overlapping findings
 2025-07-10T12:12:12  fix: works on my machine (TM)
 2025-08-14T19:29:19  chore(tests): add type hints to the public API
+2025-08-31T14:46:26  ci(rules): document the config keys
