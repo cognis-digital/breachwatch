@@ -65,3 +65,4 @@
 2025-10-03T16:20:40  chore(deps): reduce false positives on edge cases
 2025-10-19T11:37:47  refactor(format): load rules lazily for faster startup
 2025-11-06T18:54:54  test(core): memoize repeated lookups
+2025-11-22T13:11:01  ci(io): lower memory on big inputs
