@@ -1,0 +1,10 @@
+{
+  "name": "@cognis/breachwatch",
+  "version": "0.2.0",
+  "description": "JavaScript port of breachwatch (Cognis Neural Suite)",
+  "bin": {
+    "breachwatch": "index.js"
+  },
+  "license": "LicenseRef-COCL-1.0",
+  "type": "module"
+}
