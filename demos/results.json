@@ -1,0 +1,13 @@
+[
+  {
+    "email": "you@example.com",
+    "in_breach": true,
+    "in_stealer_log": false,
+    "breach": "linkedin-2024"
+  },
+  {
+    "email": "you@example.com",
+    "in_stealer_log": true,
+    "source": "redline-stealer"
+  }
+]

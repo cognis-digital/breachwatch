@@ -1,0 +1,13 @@
+[
+  {
+    "email": "ceo@company.com",
+    "in_breach": false,
+    "in_stealer_log": false
+  },
+  {
+    "email": "cfo@company.com",
+    "in_breach": true,
+    "breach": "twitter-2022",
+    "password_exposed": false
+  }
+]

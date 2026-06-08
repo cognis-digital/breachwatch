@@ -1,0 +1,25 @@
+[
+  {
+    "email": "alice@company.com",
+    "in_breach": true,
+    "breach": "linkedin-2024",
+    "password_exposed": false
+  },
+  {
+    "email": "alice@company.com",
+    "in_stealer_log": true,
+    "source": "redline-stealer-2025-04",
+    "password_exposed": true
+  },
+  {
+    "email": "bob@company.com",
+    "in_breach": true,
+    "breach": "adobe-2013",
+    "password_exposed": true
+  },
+  {
+    "email": "carol@company.com",
+    "in_breach": false,
+    "in_stealer_log": false
+  }
+]
