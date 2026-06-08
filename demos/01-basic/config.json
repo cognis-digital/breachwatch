@@ -1,0 +1,10 @@
+{
+  "identities": [
+    {"email": "chris@example.com", "usernames": ["chris_h", "archon"]},
+    {"email": "old.alias@example.net", "usernames": []}
+  ],
+  "hibp_catalog": "hibp_catalog.json",
+  "hibp_accounts": "hibp_accounts.json",
+  "dehashed": "dehashed.json",
+  "stealer_log": "stealer_log.txt"
+}

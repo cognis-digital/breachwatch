@@ -1,0 +1,17 @@
+{
+  "entries": [
+    {
+      "email": "chris@example.com",
+      "username": "chris_h",
+      "hashed_password": "5f4dcc3b5aa765d61d8327deb882cf99",
+      "database_name": "AcmeForum2024",
+      "phone": "+1-555-0100"
+    },
+    {
+      "email": "someone.else@example.org",
+      "username": "notme",
+      "password": "hunter2",
+      "database_name": "RandomLeak"
+    }
+  ]
+}

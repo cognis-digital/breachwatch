@@ -1,0 +1,5 @@
+# Raw infostealer dump (URL:LOGIN:PASS). Lines starting with # are ignored.
+https://mail.example.com/login:chris@example.com:Tr0ub4dor&3
+https://shop.example.net:archon:correct-horse:battery
+user@unrelated.com:somepassword
+malformed-line-without-separators
