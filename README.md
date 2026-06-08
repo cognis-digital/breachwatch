@@ -36,7 +36,13 @@ Personal breach aggregator — HIBP + DeHashed + stealer-log triage — without 
 <a name="features"></a>
 ## Features
 
-- ✅ Scan
+- ✅ Redact
+- ✅ Severity For
+- ✅ Parse Hibp
+- ✅ Parse Dehashed
+- ✅ Parse Stealer Log
+- ✅ Triage
+- ✅ Load Sources
 - ✅ Runs on Linux/macOS/Windows · Docker · devcontainer
 - ✅ Ports in Python, JavaScript, Go, and Rust (`ports/`)
 
