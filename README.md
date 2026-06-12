@@ -16,7 +16,7 @@
 </div>
 
 ```bash
-pip install cognis-breachwatch
+pip install "git+https://github.com/cognis-digital/breachwatch.git"
 breachwatch scan .            # → prioritized findings in seconds
 ```
 
@@ -52,7 +52,7 @@ Personal breach aggregator — HIBP + DeHashed + stealer-log triage — without 
 ## Quick start
 
 ```bash
-pip install cognis-breachwatch
+pip install "git+https://github.com/cognis-digital/breachwatch.git"
 breachwatch --version
 breachwatch scan .                       # scan current project
 breachwatch scan . --format json         # machine-readable

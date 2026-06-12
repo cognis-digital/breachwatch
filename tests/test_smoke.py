@@ -1,6 +1,5 @@
 """Smoke tests for BREACHWATCH. No network."""
 import json
-import os
 import sys
 import unittest
 from pathlib import Path
