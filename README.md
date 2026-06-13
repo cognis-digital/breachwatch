@@ -20,6 +20,12 @@ pip install "git+https://github.com/cognis-digital/breachwatch.git"
 breachwatch scan .            # → prioritized findings in seconds
 ```
 
+<!-- cognis:layman:start -->
+## What is this?
+
+Breachwatch checks whether your email addresses and usernames have appeared in known data breaches or stolen credential files. You give it a list of your accounts and point it at breach data you have downloaded, and it tells you which of your accounts were exposed, how serious each exposure is, and what to do about it — such as changing a password or enabling two-factor authentication. It works entirely on your own computer with no data sent to any third-party service, making it suitable for individuals and businesses that want privacy-first breach monitoring.
+<!-- cognis:layman:end -->
+
 ## Contents
 
 - [Why breachwatch?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
@@ -49,6 +55,42 @@ Personal breach aggregator — HIBP + DeHashed + stealer-log triage — without 
 <div align="right"><a href="#top">↑ back to top</a></div>
 
 <a name="quick-start"></a>
+<!-- cognis:install:start -->
+## Install
+
+`breachwatch` is source-available (not published to PyPI) — every method below installs
+straight from GitHub. Pick whichever you prefer; the one-line scripts auto-detect
+the best tool available on your machine.
+
+**One-liner (Linux / macOS):**
+```sh
+curl -fsSL https://raw.githubusercontent.com/cognis-digital/breachwatch/HEAD/install.sh | sh
+```
+
+**One-liner (Windows PowerShell):**
+```powershell
+irm https://raw.githubusercontent.com/cognis-digital/breachwatch/HEAD/install.ps1 | iex
+```
+
+**Or install manually — any one of:**
+```sh
+pipx install "git+https://github.com/cognis-digital/breachwatch.git"     # isolated (recommended)
+uv tool install "git+https://github.com/cognis-digital/breachwatch.git"  # uv
+pip install "git+https://github.com/cognis-digital/breachwatch.git"      # pip
+```
+
+**From source:**
+```sh
+git clone https://github.com/cognis-digital/breachwatch.git
+cd breachwatch && pip install .
+```
+
+Then run:
+```sh
+breachwatch --help
+```
+<!-- cognis:install:end -->
+
 ## Quick start
 
 ```bash
