@@ -20,6 +20,31 @@ pip install cognis-breachwatch
 breachwatch scan .            # → prioritized findings in seconds
 ```
 
+## Usage — step by step
+
+`breachwatch` is a personal breach aggregator that triages and risk-scores exposures from local sources (HIBP / DeHashed / stealer logs).
+
+1. **Install**:
+   ```bash
+   pip install -e .
+   ```
+2. **Triage** from a JSON config describing identities + sources:
+   ```bash
+   breachwatch triage config.json
+   ```
+3. **Filter by severity** and read JSON output:
+   ```bash
+   breachwatch triage config.json --min-severity medium --format json
+   ```
+4. **Use the exit code** — `--fail-on` returns exit code 2 when any exposure meets/exceeds the given severity:
+   ```bash
+   breachwatch triage config.json --fail-on high
+   ```
+5. **Automate in cron/CI**:
+   ```bash
+   breachwatch triage config.json --format json --fail-on high > exposures.json
+   ```
+
 ## Contents
 
 - [Why breachwatch?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
