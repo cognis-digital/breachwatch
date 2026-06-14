@@ -47,7 +47,7 @@ def _cmd_triage(args) -> int:
     try:
         identities, sources = load_sources(args.config)
         report = triage(identities, **sources)
-    except (OSError, ValueError, KeyError, json.JSONDecodeError) as exc:
+    except (OSError, ValueError, KeyError, TypeError, UnicodeDecodeError, json.JSONDecodeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
 

@@ -25,6 +25,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterable
 
+# Tool identity
+try:
+    _VERSION_FILE = Path(__file__).resolve().parent.parent / "VERSION"
+    TOOL_VERSION: str = _VERSION_FILE.read_text(encoding="utf-8").strip()
+except Exception:
+    TOOL_VERSION = "0.1.0"
+TOOL_NAME: str = "breachwatch"
+
+
 # Data classes that meaningfully raise the blast radius of a breach.
 _HIGH_RISK_CLASSES = {
     "passwords",
@@ -164,7 +173,15 @@ def parse_hibp(
     catalog: list[dict], account_breaches: dict[str, list[str]]
 ) -> list[Exposure]:
     """Map HIBP breach catalog + per-account membership into exposures."""
-    by_name = {str(b.get("Name", "")).lower(): b for b in catalog}
+    if not isinstance(catalog, list):
+        raise TypeError(
+            f"hibp_catalog must be a JSON array, got {type(catalog).__name__}"
+        )
+    if account_breaches is not None and not isinstance(account_breaches, dict):
+        raise TypeError(
+            f"hibp_accounts must be a JSON object, got {type(account_breaches).__name__}"
+        )
+    by_name = {str(b.get("Name", "")).lower(): b for b in catalog if isinstance(b, dict)}
     out: list[Exposure] = []
     for email, names in (account_breaches or {}).items():
         for name in names:
@@ -189,8 +206,19 @@ def parse_hibp(
 
 def parse_dehashed(dump: dict, identities: list[Identity]) -> list[Exposure]:
     """Map a DeHashed-style entries dump into exposures for owned identities."""
+    if not isinstance(dump, dict):
+        raise TypeError(
+            f"dehashed data must be a JSON object, got {type(dump).__name__}"
+        )
+    entries = dump.get("entries", [])
+    if not isinstance(entries, list):
+        raise TypeError(
+            f"dehashed entries must be a JSON array, got {type(entries).__name__}"
+        )
     out: list[Exposure] = []
-    for entry in dump.get("entries", []):
+    for entry in entries:
+        if not isinstance(entry, dict):
+            continue
         email = _norm_email(entry.get("email", ""))
         username = str(entry.get("username", "")).strip()
         owner = _match_identity(identities, email=email, username=username)
@@ -343,6 +371,8 @@ def triage(
     stealer_lines: Iterable[str] | None = None,
 ) -> TriageReport:
     """Aggregate every source into a single deduped, risk-scored triage report."""
+    if not identities:
+        raise ValueError("triage requires at least one Identity")
     exposures: list[Exposure] = []
     if hibp_catalog is not None or hibp_accounts:
         exposures += parse_hibp(hibp_catalog or [], hibp_accounts or {})
@@ -389,21 +419,62 @@ def load_sources(config_path: str | Path) -> tuple[list[Identity], dict]:
     :func:`triage` as keyword arguments.
     """
     config_path = Path(config_path)
-    cfg = json.loads(config_path.read_text(encoding="utf-8"))
+    if not config_path.exists():
+        raise FileNotFoundError(f"config not found: {config_path}")
+    try:
+        raw_text = config_path.read_text(encoding="utf-8")
+    except UnicodeDecodeError as exc:
+        raise ValueError(f"config file is not valid UTF-8: {exc}") from exc
+    try:
+        cfg = json.loads(raw_text)
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"config is not valid JSON: {exc}") from exc
+    if not isinstance(cfg, dict):
+        raise ValueError("config must be a JSON object at the top level")
     base = config_path.parent
 
-    identities = [
-        Identity(email=_norm_email(i["email"]), usernames=list(i.get("usernames", [])))
-        for i in cfg.get("identities", [])
-    ]
-    if not identities:
-        raise ValueError("config must define at least one identity")
+    raw_ids = cfg.get("identities")
+    if not isinstance(raw_ids, list) or len(raw_ids) == 0:
+        raise ValueError("config must define identities as a non-empty array")
+    identities: list[Identity] = []
+    for idx, item in enumerate(raw_ids):
+        if not isinstance(item, dict):
+            raise ValueError(f"identities[{idx}] must be a JSON object")
+        email = item.get("email", "")
+        if not email or not isinstance(email, str):
+            raise ValueError(
+                f"identities[{idx}] missing required string field email"
+            )
+        if not _EMAIL_RE.match(email.strip().lower()):
+            raise ValueError(
+                f"identities[{idx}] has invalid email address: {email!r}"
+            )
+        identities.append(
+            Identity(
+                email=_norm_email(email),
+                usernames=list(item.get("usernames", [])),
+            )
+        )
 
     def _read_json(key: str):
         rel = cfg.get(key)
         if not rel:
             return None
-        return json.loads((base / rel).read_text(encoding="utf-8"))
+        if not isinstance(rel, str):
+            raise ValueError(
+                f"config key {key!r} must be a string path, got {type(rel).__name__}"
+            )
+        p = base / rel
+        if not p.exists():
+            raise FileNotFoundError(f"source file for {key!r} not found: {p}")
+        try:
+            text = p.read_text(encoding="utf-8")
+        except UnicodeDecodeError as exc:
+            raise ValueError(f"source file {p} is not valid UTF-8: {exc}") from exc
+        try:
+            return json.loads(text)
+        except json.JSONDecodeError as exc:
+            raise ValueError(f"source file {p} is not valid JSON: {exc}") from exc
 
     sources: dict = {}
     cat = _read_json("hibp_catalog")
@@ -415,7 +486,21 @@ def load_sources(config_path: str | Path) -> tuple[list[Identity], dict]:
     deh = _read_json("dehashed")
     if deh is not None:
         sources["dehashed"] = deh
-    if cfg.get("stealer_log"):
-        text = (base / cfg["stealer_log"]).read_text(encoding="utf-8")
+    stealer_rel = cfg.get("stealer_log")
+    if stealer_rel:
+        if not isinstance(stealer_rel, str):
+            raise ValueError(
+                "config key stealer_log must be a string path, "
+                f"got {type(stealer_rel).__name__}"
+            )
+        sp = base / stealer_rel
+        if not sp.exists():
+            raise FileNotFoundError(f"stealer_log file not found: {sp}")
+        try:
+            text = sp.read_text(encoding="utf-8")
+        except UnicodeDecodeError as exc:
+            raise ValueError(
+                f"stealer_log file {sp} is not valid UTF-8: {exc}"
+            ) from exc
         sources["stealer_lines"] = text.splitlines()
     return identities, sources
