@@ -51,7 +51,6 @@ class TestCore(unittest.TestCase):
         self.assertEqual(len(exps), 2)
         self.assertTrue(all(e.has_plaintext_password for e in exps))
         self.assertTrue(all(e.severity in ("high", "critical") for e in exps))
-        self.assertIn("battery:horse", "".join(""))  # sanity placeholder
 
     def test_triage_dedupes_and_scores(self):
         ids, sources = load_sources(DEMO / "config.json")

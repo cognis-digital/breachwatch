@@ -133,7 +133,7 @@ def _score_exposure(exp: Exposure) -> int:
     score += 12 * len(classes & _HIGH_RISK_CLASSES)
     score += 5 * len(classes & _MED_RISK_CLASSES)
     if exp.has_plaintext_password:
-        score += 35
+        score += 40
     elif exp.has_hashed_password:
         score += 10
     if not exp.verified:
