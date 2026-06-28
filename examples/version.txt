@@ -1,0 +1,3 @@
+$ breachwatch-emit --version
+
+breachwatch 0.1.0

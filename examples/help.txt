@@ -1,0 +1,13 @@
+$ breachwatch-emit --help
+
+usage: breachwatch [-h] [--version] {triage} ...
+
+Personal breach aggregator: HIBP + DeHashed + stealer-log triage.
+
+positional arguments:
+  {triage}
+    triage    Aggregate + risk-score breach exposures from local sources.
+
+options:
+  -h, --help  show this help message and exit
+  --version   show program's version number and exit
